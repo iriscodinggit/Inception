@@ -1,0 +1,89 @@
+#i think i need to create the folders of mariadb and wordpress volumes
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    networks:
+      - inception
+
+    #where's the dockerfile of mariadb:
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    env_file : .env
+
+    #save the volume in the virtual machine (not in the container), so that even if the container stops, you keep the data. mariadb is a volume that we create at the end of the file (search for irlozano)
+   
+    volumes:
+      - mariadb:/var/lib/mysql
+
+    #subject asks to do this so that it restarts in case it crashes. it's the only one "Unless-stopped" instead "on-failure" cause the database always has to be on like a hosp generator (every service depends on maria db)
+    
+    restart: unless-stopped
+
+    #we only open the port in the docker network, not in the VM or my PC
+
+    expose:
+      - "3306"
+  nginx:
+    container_name: nginx
+    image: nginx
+
+    #it needs to access the volume of wordpress, since nginx is the one sending the webpage back to the browser
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+
+    #nginx starts after wordpress
+    depends_on:
+      - wordpress
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "443:443"
+    restart: on-failure
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    env_file: .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    build: 
+      context: requirements/wordpress
+      dockerfile: Dockerfile
+
+    #wordpress starts when mariadb is ready
+    depends_on:
+      - mariadb
+    restart: on-failure
+    expose:
+      - "9000"
+
+#any path starting with "home" belongs to the VM, outside of the container
+volumes:
+  wordpress:
+  #save data locally, not in the cloud
+    driver: local
+    driver_opts:
+    #default
+      type: 'none'
+      #link the folder to the container, dont create a new one:
+      o: 'bind'
+      device: '/home/irlozano/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/irlozano/data/mariadb'
+
+networks:
+ inception:
+  driver: bridge
+  #bridge is a type of network that is private and only lets containers talk to each other
