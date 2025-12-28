@@ -23,7 +23,7 @@ RUN openssl req -x509 -nodes -out "/etc/nginx/ssl/inception.crt" -keyout "/etc/n
 
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
 COPY /conf/index.html /var/www/html/
-#COPY /conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
+COPY /conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
 #permissions: owner can do everything (the owner is set in the next line, it's called nginx and the user was created automatically when installing nginx), the rest (group, others) can't execute. All files (-R) belong to the default user called nginx
 

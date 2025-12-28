@@ -1,5 +1,4 @@
-#i think i need to create the folders of mariadb and wordpress volumes
-
+#services are recipes for creating containers
 services:
   mariadb:
     container_name: mariadb
@@ -7,18 +6,20 @@ services:
     networks:
       - inception
 
-    #where's the dockerfile of mariadb:
+    #context is where's the dockerfile of mariadb:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
     env_file : .env
 
-    #save the volume in the virtual machine (not in the container), so that even if the container stops, you keep the data. mariadb is a volume that we create at the end of the file (search for irlozano)
+    #the path indicates what files you want to store in the volume (makes a copy of var/lib/mysql), so that even if the container stops, you keep the data. mariadb is a volume that we create at the end of this file (search for irlozano)
    
     volumes:
       - mariadb:/var/lib/mysql
 
-    #subject asks to do this so that it restarts in case it crashes. it's the only one "Unless-stopped" instead "on-failure" cause the database always has to be on like a hosp generator (every service depends on maria db)
+    #subject asks to do this so that it restarts in case it crashes. but here, even if it doesnt crash, (so it may ecit normally with a 0 code) we restart it,
+    #it's the only one "Unless-stopped" instead "on-failure" cause the database always has to be on  (every service depends on maria db)
+    #even if you reboot the VM, it will still restart (unlike the other two)
     
     restart: unless-stopped
 
@@ -30,7 +31,7 @@ services:
     container_name: nginx
     image: nginx
 
-    #it needs to access the volume of wordpress, since nginx is the one sending the webpage back to the browser
+    #it needs to access the volume of wordpress, since nginx is the one sending the webpage from wordpress back to the browser
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -71,19 +72,23 @@ volumes:
   #save data locally, not in the cloud
     driver: local
     driver_opts:
-    #default
+    #default means a normal file to save data locally. Other (bad) option would be nfs, but you don't want that cause it's network file system (not local)
       type: 'none'
-      #link the folder to the container, dont create a new one:
+      # Docker def of "bind": When you use a bind mount, a file or directory on the host machine is mounted from the host into a container. By contrast, when you use a volume, a new directory is created within Docker's storage directory on the host machine
+      #In other words, /home/iris/data/wordpress on your host machine will be the same folder as /var/www/wordpress inside the container.
       o: 'bind'
+      #where to save the volume in your local computer:
+      #si no funciona cambiar a home/irlozano/data/wordpress como dice subject: /home/irlozano/data
       device: '/home/irlozano/data/wordpress'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
+      #si no funciona cambiar a home/irlozano/data/mariadb
       device: '/home/irlozano/data/mariadb'
 
 networks:
  inception:
   driver: bridge
-  #bridge is a type of network that is private and only lets containers talk to each other
+  #bridge is a type of network that is private and only lets containers talk to each other, its safer than a "host" type network cause this one is completely isolated from the host whether "host" networks can access
