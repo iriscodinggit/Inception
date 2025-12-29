@@ -11,11 +11,11 @@ RUN apk add php-iconv
 RUN apk add --no-cache php83 php83-fpm php83-mysqli php83-phar mariadb-client
 RUN apk add --no-cache php-phar
 
-#descarga wordpress del link de descarga oficial y con -P guardas el contenido descargao en la carpeta /var/www
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+# download English WordPress y con -P guardas el contenido descargao en la carpeta /var/www
+RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
 
-#te vas a la carpeta donde has descargado el wordpress desde el link anterior, lo decomprimes (-xzf es descomprimir con gzip) y borras el comprimido, ya qu eno lo necesitas porque ya lo habías descomprimido
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+#te vas a la carpeta donde has descargado el wordpress desde el link anterior, lo decomprimes (-xzf es xtract, zip, file : descomprimir con gzip) y borras el comprimido, ya qu eno lo necesitas porque ya lo habías descomprimido
+RUN cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
 #le damos permisos de propietario (chown = changeowner) al usuario root del grupo root para poder escribir la carpeta de wordpress
 RUN chown -R root:root /var/www/wordpress
