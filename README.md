@@ -19,6 +19,8 @@ The technologies used include:
 - **Nginx**: A web server that serves the WordPress content to the client and forwards PHP requests to PHP-FPM.
 - **Alpine Linux**: A lightweight and fast Linux distribution used to improve performance.
 
+----
+
 ### Docker vs Virtual Machines
 
 Containers and virtual machines (VMs) both allow multiple isolated environments to run on the same physical machine, but they operate at different levels of virtualization.
@@ -38,12 +40,15 @@ On the other hand, containers implement virtualization at the operating system l
 | Portability | Moderate | High |
 | Typical use case | Running different operating systems | Running multiple services or applications |
 
+----
 
 ### Secrets vs Environment Variables
 
 A docker secret is a piece of sensitive information, such as a password, SSH key, or SSL certificate, that should not be exposed in source code, Dockerfile, or transmitted unencrypted. Docker secrets allow developers to centrally manage this data and securely provide it only to the containers that need it. Secrets are encrypted both in transit and at rest, and a secret is accessible only to the services explicitly granted access and only while those service tasks are running.
 
 In this project, instead of using Docker secrets, I used an .env file to store environment variables. This file contains configuration values such as database credentials. To keep it secure, the .env file is not uploaded to Git and is stored locally on my machine. This approach simplifies development while maintaining reasonable security for a learning environment.
+
+----
 
 ### Docker Network vs Host Network
 
@@ -66,6 +71,8 @@ On the host machine, these directories are located under `/home/irlozano/data/`.
 - `/var/www/wordpress` for WordPress
 
 Because bind mounts directly link host directories to container directories, all data persists even if the containers are stopped, removed, or rebuilt. This ensures that the database and website content are not lost when containers are recreated.
+
+----
 
 ## Instructions  
 
@@ -98,6 +105,8 @@ To fully rebuild the project:
 
 make re
 
+----
+
 ## Resources 
 
 1. **Useful links**
@@ -116,10 +125,13 @@ make re
 
 - https://docs.docker.com/engine/swarm/secrets/
 
+----
 
 2. **Ethical use of AI**
 
 AI was used to provide alternative explanations of documentation-related concepts, while always cross-checking with the original documentation. Seeing multiple perspectives on the same concept helped deepen understanding. Additionally, peer-to-peer discussions were employed to compare and validate these key concept definitions.
+
+----
 
 ## Special Thanks
 
