@@ -2,7 +2,7 @@
 #1. indica qué intérprete usar (sh) para poder hacer directamente "./init_mariadb.sh" y no "sh init_mariadb.sh"
 
 #arraca mysqld con el usuario mysql y le dice que guarde los datos en x carpeta y que el socket x es el que deben usar otros servicios (php) para conectarse a la base de datos
-#el & final significa que se ejecute el comando en background, porque si no, nunca se ejecutarían las siguientes líneas del script
+#el & final significa que se ejecute el comando en background (no está prohibido porqe lo hago desde CMD no ENTRYPOINT), porque si no, nunca se ejecutarían las siguientes líneas del script
 mysqld --user=mysql --datadir=/var/lib/mysql --socket=/run/mysqld/mysqld.sock &
 
 #la diferencia entre mysqld (servidor) y mysql (cliente) es que el primero es el daemon (empieza el server, procesa devuelve resultados) y el segundo es el que hace las solicitudes
