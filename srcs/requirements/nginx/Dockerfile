@@ -2,13 +2,10 @@
 
 FROM alpine:3.22
 #3.22 is currently (7-12-25) the penultimate stable version of alpine
-RUN apk update
-RUN apk upgrade
 
-RUN apk add vim
-RUN apk add curl
-RUN apk add openssl
-RUN apk add nginx
+RUN apk update && apk upgrade \
+    && apk add vim curl openssl nginx
+
 #openSSL to generate the SSL certificate
 
 #creating necessary folders: to store certificate, nginx processes and html content
@@ -16,7 +13,7 @@ RUN mkdir -p /etc/nginx/ssl
 RUN mkdir -p /var/run/nginx
 RUN mkdir -p /var/www/html
 
-#generate the SSL certifucate
+#generate the SSL certifucate (req request, -x509 es el tipo de certificado, en este caso autofirmado, nodes es que no cifre la clave del dispositivo y out es en que path guardar el certificado)
 RUN openssl req -x509 -nodes -out "/etc/nginx/ssl/inception.crt" -keyout "/etc/nginx/ssl/inception.key" -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=irlozano.42.fr/UID=irlozano"
 
 #copy conf files (i have them in the conf folder) from local virtual machine path to container path: initial webpage, php conf and nginx conf

@@ -1,11 +1,9 @@
 FROM alpine:3.22
 
-RUN apk update
-RUN apk upgrade
+RUN apk update && apk upgrade
 
 #este lo necesitamos  para obtener archivos desde links
-RUN apk add wget
-RUN apk add php-iconv
+RUN apk add wget php-iconv
 
 #instala apk y sus dependencias (si no funciona php7, es porque alpine nuevo solo acepta la 83)
 RUN apk add --no-cache php83 php83-fpm php83-mysqli php83-phar mariadb-client
