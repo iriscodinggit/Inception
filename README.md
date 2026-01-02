@@ -125,6 +125,12 @@ make re
 
 - https://docs.docker.com/engine/swarm/secrets/
 
+- https://github.com/cfareste/inception?tab=readme-ov-file#121-What-is-Docker-Compose-
+
+- https://flywp.com/blog/9281/optimize-php-fpm-settings-flywp/
+
+- https://spinupwp.com/doc/how-php-workers-impact-wordpress-performance/
+
 ----
 
 2. **Ethical use of AI**
