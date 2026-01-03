@@ -2,17 +2,17 @@
 
 ## Services provided by the stack
 
-The stack provides three services (does it mean these services?):
+The stack provides three services:
 
-- Nginx: Serves the WordPress content to your browser.
+- Nginx: A web server that serves the WordPress content to the client and forwards PHP requests to PHP-FPM.
 
-- Wordpress: Provides the website and content management system.
+- Wordpress: A content management system used to create and manage the website.
 
-- MariaDB: Stores the WordPress database, including users, posts, and configurations.
+- MariaDB: A relational database used to store WordPress data such as users, posts, and settings.
 
 ## How to start and stop the project
 
-Build the Docker images and start the containers:
+Create your own .env file and place it in the srcs folder. Build the Docker images and start the containers:
 
 make
 
