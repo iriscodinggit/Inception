@@ -4,6 +4,7 @@ RESET := \033[0m
 #replace wherever you see COMPOSE with this file:
 COMPOSE = docker compose -f srcs/docker-compose.yml
 
+#up creates the containers, -d detached so that you can keep using the terminal and build rebuilds the images if there have been changes
 $(NAME):
 	$(COMPOSE) up -d --build
 	@echo "$(PINK)👨‍💻 Inception is ready! $(RESET)"
