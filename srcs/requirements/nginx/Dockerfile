@@ -1,4 +1,4 @@
-FROM alpine:3.23
+FROM alpine:3.22
 
 RUN apk update && apk upgrade \
     && apk add vim curl openssl nginx
