@@ -22,7 +22,7 @@ sleep 2
 
 #author: write and publish posts
 
-  wp user create --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress' >> /log_user_wp.txt
+  wp user create --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress'
 fi
 
 #socket php file
