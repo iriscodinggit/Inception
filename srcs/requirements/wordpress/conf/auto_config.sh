@@ -1,12 +1,7 @@
 #!/bin/sh
 
-#these two just for debugging, prints the commands  and variables(delete after)
-set -x
-
 #wait for mariadb to start
 sleep 10
-
-echo $SQL_DATABASE $DOMAIN_NAME $SQL_USER $USER1_LOGIN
 
 if [ ! -f /var/www/wordpress/wp-config.php ]; then 
     wp config create	--allow-root \
